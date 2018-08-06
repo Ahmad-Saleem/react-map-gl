@@ -31,7 +31,9 @@ const propTypes = Object.assign({}, BaseControl.propTypes, {
   // Offset from the left
   offsetLeft: PropTypes.number,
   // Offset from the top
-  offsetTop: PropTypes.number
+  offsetTop: PropTypes.number,
+  // onClick
+  onClick: PropTypes.func,
 });
 
 const defaultProps = Object.assign({}, BaseControl.defaultProps, {
@@ -50,7 +52,7 @@ const defaultProps = Object.assign({}, BaseControl.defaultProps, {
 export default class Marker extends BaseControl {
 
   render() {
-    const {className, longitude, latitude, offsetLeft, offsetTop} = this.props;
+    const {className, longitude, latitude, offsetLeft, offsetTop, onClick} = this.props;
 
     const [x, y] = this.context.viewport.project([longitude, latitude]);
     const containerStyle = {
@@ -63,7 +65,8 @@ export default class Marker extends BaseControl {
       className: `mapboxgl-marker ${className}`,
       ref: this._onContainerLoad,
       style: containerStyle,
-      children: this.props.children
+      children: this.props.children,
+      onClick: this.props.onClick.bind(this),
     });
   }
 
